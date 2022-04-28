@@ -50,15 +50,24 @@ class Game extends React.Component {
         squares: Array(9).fill(null),
       }],
       whoIsNext: this.x,
+      stepNumber: 0,
     };
   }
 
+  getNext() {
+    return this.state.whoIsNext === this.x ? this.o : this.x;
+  }
+
   handleClick(i) {
-    const history = this.state.history;
+    // console.log(this.state.stepNumber);
+    // console.log(this.state.whoIsNext);
+
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const actual = history[history.length - 1];
     const squares = actual.squares.slice();
+    const winner = calcWinner(squares);
 
-    if (calcWinner(squares)) {
+    if (winner || squares[i]) {
       return;
     }
 
@@ -67,19 +76,37 @@ class Game extends React.Component {
       history: history.concat([{
         squares: squares,
       }]),
-      whoIsNext: this.state.whoIsNext === this.x ? this.o : this.x,
+      whoIsNext: this.getNext(),
+      stepNumber: history.length,
+    });
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      whoIsNext: this.getNext(),
     });
   }
 
   render() {
     const history = this.state.history;
-    const actual = history[history.length - 1];
+    const actual = history[this.state.stepNumber];
     let status = `Next player: ${this.state.whoIsNext}`;
     const winner = calcWinner(actual.squares);
 
     if (winner) {
       status = `Winner is ${winner}`;
     }
+
+    const moves = history.map((element, index) => {
+      const label = index === 0 ? 'Go to start' : `Go to move #${index}`;
+
+      return (
+        <li key={index}>
+          <button onClick={() => this.jumpTo(index)}>{label}</button>
+        </li>
+      );
+    });
 
     return (
       <div className="game">
@@ -91,7 +118,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
