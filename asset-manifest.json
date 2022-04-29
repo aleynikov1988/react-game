@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ttt-app/static/css/main.22941023.css",
-    "main.js": "/ttt-app/static/js/main.d6e977cb.js",
+    "main.js": "/ttt-app/static/js/main.cf703855.js",
     "index.html": "/ttt-app/index.html",
     "main.22941023.css.map": "/ttt-app/static/css/main.22941023.css.map",
-    "main.d6e977cb.js.map": "/ttt-app/static/js/main.d6e977cb.js.map"
+    "main.cf703855.js.map": "/ttt-app/static/js/main.cf703855.js.map"
   },
   "entrypoints": [
     "static/css/main.22941023.css",
-    "static/js/main.d6e977cb.js"
+    "static/js/main.cf703855.js"
   ]
 }
